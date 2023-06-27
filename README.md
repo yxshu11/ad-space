@@ -1,24 +1,27 @@
-# README
+# Sephora adSpace
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+## Ruby version
+3.2.2
 
-* Ruby version
 
-* System dependencies
+## Rails version
+7.0.5
 
-* Configuration
+---
+## Setup
+1. Clone the repo
+2. Manage the Database
+   - rails db:create
+   - rails db:migrate
+   - rails db:seed
+3. Start the Server
+   - rails s
+4. Create billboards and activate it in the billboard index page
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+---
+## APIs available 
+1. GET Billboards
+    - /api/v1/billboards?category=<category_slug_url_you_set>
+2. POST Billboard Impression
+    - /api/v1/billboards/:id/update_impression
