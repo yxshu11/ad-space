@@ -1,0 +1,28 @@
+<div class="categories-index-page mt-5">
+  <%= link_to 'Create New Category', new_admin_category_path, class: 'btn btn-dark', style: 'float: right;' %>
+  <h1>Categories</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Slug Url</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categories.each do |category| %>
+        <tr>
+          <th scope="row"><%= category.id %></th>
+          <td><%= category.name %></td>
+          <td><%= category.slug_url %></td>
+          <td>
+            <%= link_to 'View', admin_category_path(category), method: :delete, class: 'btn btn-sm btn-success' %>
+            <%= link_to 'Edit', edit_admin_category_path(category), class: 'btn btn-sm btn-warning' %>
+            <%= link_to 'Delete', admin_category_path(category), data: { turbo_method: :delete }, class: 'btn btn-sm btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

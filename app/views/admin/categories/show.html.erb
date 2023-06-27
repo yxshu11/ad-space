@@ -1,0 +1,7 @@
+<div class="category-new-page mt-5">
+  <h1>Category - <%= @category.name %></h1>
+  <p>Name: <%= @category.name %></p>
+  <p>Slug URL: <%= @category.slug_url %></p>
+
+  <%= link_to 'Back', admin_categories_path, class: 'btn btn-info' %>
+</div>

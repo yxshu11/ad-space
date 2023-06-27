@@ -1,0 +1,25 @@
+<div class="category-edit-page mt-5">
+  <h1>Edit Category - <%= @category.name %></h1>
+
+  <% if @category.errors.any? %>
+    <h3>Errors:</h3>
+    <% @category.errors.full_messages.each do |message| %>
+    <span><%= message %></span>
+    <% end %>
+  <% end %>
+
+  </br>
+
+  <%= form_for([:admin, @category], data: { turbo: false }) do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :slug_url, class: 'form-label' %>
+      <%= form.text_field :slug_url, class: 'form-control' %>
+    </div>
+    <%= form.submit 'Update Category', class: 'btn btn-primary' %>
+  <% end %>
+  <form>
+</div>

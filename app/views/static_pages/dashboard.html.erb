@@ -1,0 +1,51 @@
+<div class="dashboard-page mt-5">
+  <h1>Dashboard</h1>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Billboard Weekly Impression</h5>
+          <p class="card-text">Billboard Impression shown here are real time data.</p>
+          <%= column_chart @billboard_impressions.group_by_day_of_week(:created_at, format: "%a").count %>
+          <hr>
+          Total Impressions for the month: <%= @billboard_impressions.for_this_month.count %>
+          <br>
+          <%= link_to "Boost Billboards", billboards_path, class: "btn btn-primary mt-3" %>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Product Weekely Impression</h5>
+          <p class="card-text">Product Impression shown here are real time data.</p>
+          <%= column_chart @product_impressions.group_by_day_of_week(:created_at, format: "%a").count %>
+          <hr>
+          Total Impressions for the month: <%= @product_impressions.for_this_month.count %>
+          <br>
+          <%= link_to "Boost Billboards", '#', class: "btn btn-primary mt-3" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4 mb-4">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Credit Usage</h5>
+          <p class="card-text">Available credits: <%= number_to_currency(@available_credits) %></p>
+          <p class="card-text">Current Usage: <%= number_to_currency(@usage_credits) %></p>
+          <p class="card-text"><%= number_to_currency(@estimated_credit_usage) %> credits estimated* for <%= Date.today.strftime("%B") %> 2023</p>
+          
+          <hr>
+          <small>* Estimation might vary based on last 7 days impression.</small>
+
+          <br>
+          <br>
+          <a href="#" class="btn btn-primary">Manage Credit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

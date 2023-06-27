@@ -1,0 +1,37 @@
+<div class="billboard-new-page mt-5">
+  <h1>Create New Billboard</h1>
+
+  <% if @billboard.errors.any? %>
+    <h3>Errors:</h3>
+    <% @billboard.errors.full_messages.each do |message| %>
+    <span><%= message %></span>
+    <% end %>
+  <% end %>
+
+  </br>
+
+  <%= form_with(model: @billboard, data: { turbo: false }) do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :path, class: 'form-label' %>
+      <%= form.text_field :path, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :targetted_impressions, class: 'form-label' %>
+      <%= form.number_field :targetted_impressions, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :category_id, class: 'form-label' %>
+      <%= form.select :category_id, Category.all.collect { |category| [category.name, category.id] }, { prompt: 'Select a category' }, { class: 'form-control' } %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :image, class: 'form-label' %>
+      <%= form.file_field :image, class: 'form-control' %>
+    </div>
+    <%= form.submit 'Create Billboard', class: 'btn btn-primary' %>
+  <% end %>
+  <form>
+</div>

@@ -1,0 +1,39 @@
+<div class="billboards-index-page mt-5">
+  <%= link_to 'Create New Billboards', new_billboard_path, class: 'btn btn-dark', style: 'float: right;' %>
+  <h1>Billboards</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Preview</th>
+        <th scope="col">Name</th>
+        <th scope="col">Targetted Impressions</th>
+        <th scope="col">Impressions</th>
+        <th scope="col">Status</th>
+        <th scope="col">Promotion</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @billboards.each do |billboard| %>
+        <tr>
+          <th scope="row"><%= billboard.id %></th>
+          <td><%= image_tag(billboard.image, width: 100) %></td>
+          <td><%= billboard.name %></td>
+          <td><%= billboard.targetted_impressions %></td>
+          <td><%= billboard.impressions.count %></td>
+          <td><%= billboard.activated && billboard.impressions.count < billboard.targetted_impressions ? 'Active' : 'Stopped' %></td>
+          <td>
+            <%= link_to 'Activate', activate_billboard_path(billboard), class: 'btn btn-sm btn-success mt-1' %>
+            <%= link_to 'Deactivate', deactivate_billboard_path(billboard), class: 'btn btn-sm btn-danger mt-1' %>
+          </td>
+          <td>
+            <%= link_to 'View', billboard_path(billboard), method: :delete, class: 'btn btn-sm btn-success mt-1' %>
+            <%= link_to 'Edit', edit_billboard_path(billboard), class: 'btn btn-sm btn-warning mt-1' %>
+            <%= link_to 'Delete', billboard_path(billboard), data: { turbo_method: :delete }, class: 'btn btn-sm btn-danger mt-1' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

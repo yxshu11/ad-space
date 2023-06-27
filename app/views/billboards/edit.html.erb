@@ -1,0 +1,38 @@
+<div class="billboard-edit-page mt-5">
+  <h1>Edit Billboard - <%= @billboard.name %></h1>
+
+  <% if @billboard.errors.any? %>
+    <h3>Errors:</h3>
+    <% @billboard.errors.full_messages.each do |message| %>
+    <span><%= message %></span>
+    <% end %>
+  <% end %>
+
+  </br>
+
+  <%= form_with(model: @billboard, data: { turbo: false }) do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :path, class: 'form-label' %>
+      <%= form.text_field :path, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :targetted_impressions, class: 'form-label' %>
+      <%= form.number_field :targetted_impressions, class: 'form-control' %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :category_id, class: 'form-label' %>
+      <%= form.select :category_id, Category.all.collect { |category| [category.name, category.id] }, { prompt: 'Select a category' }, { class: 'form-control' } %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :image, class: 'form-label' %>
+      <%= form.file_field :image, class: 'form-control' %>
+      Current image: <%= image_tag(@billboard.image, width: 100) %>
+    </div>
+    <%= form.submit 'Update Billboard', class: 'btn btn-primary' %>
+  <% end %>
+  <form>
+</div>

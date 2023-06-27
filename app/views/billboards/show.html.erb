@@ -1,0 +1,12 @@
+<div class="billboard-new-page mt-5">
+  <h1>Billboard - <%= @billboard.name %></h1>
+  <%= image_tag(@billboard.image, width: 200) %>
+  <p>Name: <%= @billboard.name %></p>
+  <p>Path: <%= @billboard.path %></p>
+  <p>Targetted Impression: <%= @billboard.targetted_impressions %></p>
+  <p>Impression: <%= @billboard.impressions.count %></p>
+  <p>Status: <%= @billboard.activated && @billboard.impressions.count < @billboard.targetted_impressions ? 'Active' : 'Stopped' %></p>
+  <p>Category: <%= @billboard.category.slug_url %></p>
+
+  <%= link_to 'Back', billboards_path, class: 'btn btn-info' %>
+</div>
