@@ -6,7 +6,7 @@ class Api::V1::BillboardsController < ApplicationController
     render json: @billboards.map { |billboard| billboard.as_json.merge({ image_url: url_for(billboard.image), impressions: billboard.impressions.count }) }
   end
 
-  def update_impression
+  def update
     @billboard = Billboard.active.where(id: params[:id])
 
     if @billboard.present?

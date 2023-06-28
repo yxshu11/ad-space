@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   root "static_pages#dashboard"
   
   get "dashboard", to: "static_pages#dashboard"
-
+  get "refresh_billboard", to: 'static_pages#refresh_billboard'
+  
   resources :billboards do
     get :activate, on: :member
     get :deactivate, on: :member
@@ -17,9 +18,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :billboards, only: [:index] do
-        post :update_impression, on: :member
-      end
+      resources :billboards, only: [:index, :update]
     end
   end
 end

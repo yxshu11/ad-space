@@ -4,27 +4,32 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Billboard Weekly Impression</h5>
-          <p class="card-text">Billboard Impression shown here are real time data.</p>
-          <%= column_chart @billboard_impressions.group_by_day_of_week(:created_at, format: "%a").count %>
-          <hr>
-          Total Impressions for the month: <%= @billboard_impressions.for_this_month.count %>
-          <br>
-          <%= link_to "Boost Billboards", billboards_path, class: "btn btn-primary mt-3" %>
+        <div class="card-body billboard-impression">
+        <h5 class="card-title">Billboard Weekly Impression</h5>
+        <p class="card-text">Billboard Impression shown here are real time data.</p>
+
+        <%= column_chart @billboard_impressions.group_by_day_of_week(:created_at, format: "%a").count %>
+
+        <hr>
+
+        <span class="total-impression">Total Impressions for the month: <%= @billboard_impressions.for_this_month.count %></span>
+
+        <br>
+
+        <%= link_to "Boost Billboards", billboards_path, class: "btn btn-primary mt-3" %>
         </div>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Product Weekely Impression</h5>
+          <h5 class="card-title">Product Weekly Impression</h5>
           <p class="card-text">Product Impression shown here are real time data.</p>
           <%= column_chart @product_impressions.group_by_day_of_week(:created_at, format: "%a").count %>
           <hr>
           Total Impressions for the month: <%= @product_impressions.for_this_month.count %>
           <br>
-          <%= link_to "Boost Billboards", '#', class: "btn btn-primary mt-3" %>
+          <%= link_to "Boost Products", '#', class: "btn btn-primary mt-3" %>
         </div>
       </div>
     </div>
@@ -35,8 +40,8 @@
         <div class="card-body">
           <h5 class="card-title mb-4">Credit Usage</h5>
           <p class="card-text">Available credits: <%= number_to_currency(@available_credits) %></p>
-          <p class="card-text">Current Usage: <%= number_to_currency(@usage_credits) %></p>
-          <p class="card-text"><%= number_to_currency(@estimated_credit_usage) %> credits estimated* for <%= Date.today.strftime("%B") %> 2023</p>
+          <p class="card-text current-usage">Current Usage: <%= number_to_currency(@usage_credits) %></p>
+          <p class="card-text estimated-credit-usage"><%= number_to_currency(@estimated_credit_usage) %> credits estimated* for <%= Date.today.strftime("%B %Y") %></p>
           
           <hr>
           <small>* Estimation might vary based on last 7 days impression.</small>
@@ -49,3 +54,25 @@
     </div>
   </div>
 </div>
+
+<script>
+window.onload = (event) => {
+  setInterval(function() {
+    $.ajax({
+      url: "/refresh_billboard",
+      success: function (result) {
+        console.log(result);
+        const billboard_impression_data = result.billboard_impression_data
+        const billboard_impression_count = result.billboard_impression_count
+        const current_usage = result.current_usage.toFixed(2)
+        const estimated_credit_usage = result.estimated_credit_usage.toFixed(2)
+
+        Chartkick.charts["chart-1"].updateData(billboard_impression_data)
+        $(".total-impression").html(`Total Impressions for the month: ${billboard_impression_count}`)
+        $(".current-usage").html(`Current Usage: $${current_usage}`)
+        $(".estimated-credit-usage").html(`$${estimated_credit_usage} credits estimated* for ${new Date().toLocaleString('en-us',{month:'long', year:'numeric'})}`)
+      },
+    })
+  }, 1500);
+};
+</script>
